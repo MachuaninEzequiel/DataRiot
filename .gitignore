@@ -1,0 +1,8 @@
+# Ignorar todos los archivos PNG
+*.png
+
+# Excepto los que están en la carpeta assets
+!assets/*.png
+
+# Ignorar heat_map.py
+heat_map.py
