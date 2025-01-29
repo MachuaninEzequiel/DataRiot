@@ -1,6 +1,4 @@
-# DataRiot
-
-LeagueOfLegends-DataManagement
+# LeagueOfLegends-DataManagement
 
 # Proyecto de Análisis de Partidas de League of Legends
 
