@@ -1,8 +1,8 @@
 # Ignorar todos los archivos PNG
 *.png
 
-# Excepto los que están en la carpeta assets
+# Pero no ignorar los archivos PNG en la carpeta assets
 !assets/*.png
 
-# Ignorar heat_map.py
-heat_map.py
+# Ignorar el archivo posicion.py
+posicion.py
