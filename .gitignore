@@ -1,11 +1,4 @@
-# Ignorar todos los archivos PNG
-*.png
 
-# Pero no ignorar los archivos PNG en la carpeta assets
-!assets/*.png
-
-# Ignorar el archivo posicion.py
-posicion.py
 
 prueba.py
 
