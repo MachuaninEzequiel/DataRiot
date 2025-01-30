@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import os
 
 # Leer los datos del archivo CSV
-GAME_NAME = 'EL EKOINOMISTA'
-csv_file = f'match_history_{GAME_NAME}.csv'
+GAME_NAME = 'tukaan'
+TAG_LINE = 'tukan'
+csv_file = f'match_history_{GAME_NAME}_{TAG_LINE}.csv'
 data = pd.read_csv(csv_file)
 
 # Imprimir los nombres de las columnas para verificar
@@ -12,7 +13,7 @@ print("Columnas disponibles en el DataFrame:")
 print(data.columns)
 
 # Filtrar los datos por el jugador específico
-player_name = 'EL EKOINOMISTA'  # Reemplaza con el nombre del jugador específico
+player_name = 'DONATELL0'  # Reemplaza con el nombre del jugador específico
 player_data = data[data['Invocador'] == player_name].copy()
 
 # Contar la cantidad de partidas disponibles
@@ -41,7 +42,7 @@ player_data = data[data['Invocador'] == player_name].copy()
 partidas_seleccionadas = player_data.iloc[start_partida-1:end_partida].copy()
 
 # Crear la carpeta para guardar los gráficos
-output_dir = os.path.join('assets', player_name)
+output_dir = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{player_name}")
 os.makedirs(output_dir, exist_ok=True)
 
 # Crear una nueva columna que combine el nombre del campeón y el rol

@@ -10,14 +10,14 @@ with open("config.json") as f:
     API_KEY = config["API_KEY"]
 
 REGION = 'europe'
-GAME_NAME = 'EL EKOINOMISTA'
-TAG_LINE = 'EUW'
+GAME_NAME = 'tukaan'
+TAG_LINE = 'tukan'
 BASE_URL = f'https://{REGION}.api.riotgames.com'
 SEASON = '13'  # Temporada actual
 
 # Obtener el PUUID por Riot ID
-def get_puuid_by_riot_id(game_name, tag_line):
-    url = f'{BASE_URL}/riot/account/v1/accounts/by-riot-id/{quote(game_name)}/{quote(tag_line)}'
+def get_puuid_by_riot_id(GAME_NAME, TAG_LINE):
+    url = f'{BASE_URL}/riot/account/v1/accounts/by-riot-id/{quote(GAME_NAME)}/{quote(TAG_LINE)}'
     headers = {'X-Riot-Token': API_KEY}
     try:
         response = requests.get(url, headers=headers)
@@ -29,7 +29,7 @@ def get_puuid_by_riot_id(game_name, tag_line):
 
 
 # Obtener la lista de IDs de partidas
-def get_match_ids(puuid, count=50):
+def get_match_ids(puuid, count=25):
     url = f'https://{REGION}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids'
     headers = {'X-Riot-Token': API_KEY}
     params = {'count': count}
@@ -102,7 +102,7 @@ def get_rune_details(participant, rune_data):
     return f"{primary_rune_name} ({secondary_tree_name})"
 
 # Guardar información en un archivo CSV
-def save_to_csv(match_details, item_data, rune_data, csv_file=f'match_history_{GAME_NAME}.csv'):
+def save_to_csv(match_details, item_data, rune_data, csv_file=f'match_history_{GAME_NAME}_{TAG_LINE}.csv'):
     file_exists = os.path.isfile(csv_file)
     with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
@@ -124,7 +124,7 @@ def save_to_csv(match_details, item_data, rune_data, csv_file=f'match_history_{G
         
         # Detalles de los jugadores
         for participant in match_details['info']['participants']:
-            summoner_name = participant['summonerName'].split('#')[0]
+            summoner_name = participant['summonerName']
 
             # Convertir IDs de ítems a nombres
             items = ', '.join([get_item_name(participant.get(f'item{i}', 0), item_data) for i in range(7)])
@@ -189,7 +189,7 @@ def main():
 
     
     puuid = get_puuid_by_riot_id(GAME_NAME, TAG_LINE)
-    match_ids = get_match_ids(puuid, count=50)
+    match_ids = get_match_ids(puuid, count=25)
 
     for match_id in match_ids:
         match_details = get_match_details(match_id)
