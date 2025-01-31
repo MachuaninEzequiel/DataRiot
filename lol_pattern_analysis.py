@@ -2,8 +2,8 @@ import pandas as pd
 import os
 
 # Cargar datos
-GAME_NAME = 'tukaan'
-TAG_LINE = 'tukan'
+GAME_NAME = 'Naxeron'
+TAG_LINE = 'LAS'
 csv_file = f'match_history_{GAME_NAME}_{TAG_LINE}.csv'
 data = pd.read_csv(csv_file)
 

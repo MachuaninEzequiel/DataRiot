@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import os
 
 # Leer los datos del archivo CSV
-GAME_NAME = 'tukaan'
-TAG_LINE = 'tukan'
+GAME_NAME = 'Naxeron'
+TAG_LINE = 'LAS'
+player_name = 'Naxeron'  # Reemplaza con el nombre del jugador específico
 csv_file = f'match_history_{GAME_NAME}_{TAG_LINE}.csv'
 data = pd.read_csv(csv_file)
 
@@ -13,7 +14,7 @@ print("Columnas disponibles en el DataFrame:")
 print(data.columns)
 
 # Filtrar los datos por el jugador específico
-player_name = 'DONATELL0'  # Reemplaza con el nombre del jugador específico
+
 player_data = data[data['Invocador'] == player_name].copy()
 
 # Contar la cantidad de partidas disponibles
@@ -25,7 +26,6 @@ start_partida = int(input(f"Ingrese el número de la partida inicial (1 a {total
 max_end_partida = min(start_partida + 9, total_partidas)
 end_partida = int(input(f"Ingrese el número de la partida final (máximo {max_end_partida}): "))
 
-# Asegurarse de que el rango no exceda el total de partidas y que no sea mayor a 10 partidas
 while end_partida > max_end_partida:
     print(f"El número de la partida final no puede ser mayor a {max_end_partida}. Por favor, ingrese nuevamente.")
     end_partida = int(input(f"Ingrese el número de la partida final (máximo {max_end_partida}): "))
@@ -41,9 +41,28 @@ data['Rol'] = data.groupby('Match ID').cumcount().map(lambda x: roles[x % 5])
 player_data = data[data['Invocador'] == player_name].copy()
 partidas_seleccionadas = player_data.iloc[start_partida-1:end_partida].copy()
 
+# Identificar al oponente con el mismo rol en cada partida
+opponent_data = []
+for match_id, role in zip(partidas_seleccionadas['Match ID'], partidas_seleccionadas['Rol']):
+    opponent = data[(data['Match ID'] == match_id) & (data['Rol'] == role) & (data['Invocador'] != player_name)]
+    if not opponent.empty:
+        opponent = opponent.iloc[0]
+        opponent_data.append(opponent)
+
+# Convertir los datos del oponente a un DataFrame
+opponent_df = pd.DataFrame(opponent_data)
+
+# Concatenar los datos del jugador y del oponente verticalmente
+combined_data = pd.concat([partidas_seleccionadas, opponent_df], ignore_index=True)
+
 # Crear la carpeta para guardar los gráficos
 output_dir = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{player_name}")
 os.makedirs(output_dir, exist_ok=True)
+
+# Guardar el DataFrame en un archivo CSV
+output_csv = os.path.join(output_dir, 'datos_filtrados.csv')
+combined_data.to_csv(output_csv, index=False)
+print(f"Datos filtrados guardados en {output_csv}")
 
 # Crear una nueva columna que combine el nombre del campeón y el rol
 partidas_seleccionadas.loc[:, 'Campeón y Rol'] = partidas_seleccionadas['Campeón'] + ' (' + partidas_seleccionadas['Rol'] + ')'
@@ -61,7 +80,6 @@ plt.title(f'KDA por partida (Partidas {start_partida} a {end_partida})')
 plt.xlabel('Campeón y Rol por Partida')
 plt.ylabel('KDA')
 plt.xticks(rotation=90)
-plt.grid(True)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'kda_por_partida.png'))
 plt.show()

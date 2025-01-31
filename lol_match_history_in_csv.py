@@ -9,9 +9,9 @@ with open("config.json") as f:
     config = json.load(f)
     API_KEY = config["API_KEY"]
 
-REGION = 'europe'
-GAME_NAME = 'tukaan'
-TAG_LINE = 'tukan'
+REGION = 'americas'
+GAME_NAME = 'Naxeron'
+TAG_LINE = 'LAS'
 BASE_URL = f'https://{REGION}.api.riotgames.com'
 SEASON = '13'  # Temporada actual
 
