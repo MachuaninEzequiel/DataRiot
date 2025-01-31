@@ -1,6 +1,4 @@
-# LeagueOfLegends-DataManagement
-
-# Proyecto de Análisis de Partidas de League of Legends
+# LeagueOfLegends DataManagement
 
 Este proyecto contiene scripts y archivos para descargar, procesar y analizar datos de partidas de League of Legends. A continuación se describe brevemente la funcionalidad de cada archivo en la carpeta del proyecto.
 
