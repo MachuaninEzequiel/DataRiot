@@ -1,10 +1,8 @@
 # LeagueOfLegends DataManagement
 
-## Análisis de Partidas de League of Legends
-
 Este proyecto contiene scripts y archivos para descargar, procesar y analizar datos de partidas de League of Legends. A continuación se describe brevemente la funcionalidad de cada archivo en la carpeta del proyecto.
 
-### Archivos
+## Archivos
 
 - **lol_match_history_in_csv.py**: Este script descarga el historial de partidas de un jugador específico y guarda los detalles en un archivo CSV. Utiliza la API de Riot Games para obtener los datos de las partidas.
 
@@ -14,7 +12,7 @@ Este proyecto contiene scripts y archivos para descargar, procesar y analizar da
 
 - **lol_discord_report.py**: Este script configura un bot de Discord que permite a los usuarios solicitar reportes de partidas a través de comandos en Discord.
 
-### Uso
+## Uso
 
 1. **Descargar el historial de partidas**:
 
@@ -37,7 +35,7 @@ Este proyecto contiene scripts y archivos para descargar, procesar y analizar da
    - Usa el comando `!reporte` en un canal de texto de Discord donde el bot esté presente para obtener la lista de jugadores disponibles.
    - Usa el comando `!reporte <nombre_del_jugador>` para obtener el reporte de un jugador específico. Reemplaza `<nombre_del_jugador>` con el nombre del jugador para el cual deseas obtener el reporte.
 
-### Requisitos
+## Requisitos
 
 - Python 3.x
 - Bibliotecas: `pandas`, `matplotlib`, `requests`, `discord.py`, `fpdf`
