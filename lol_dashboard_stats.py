@@ -9,12 +9,12 @@ from matplotlib.backends.backend_pdf import PdfPages
 plt.switch_backend('Agg')
 
 # Configuración
-GAME_NAME = 'Naxeron'
-TAG_LINE = 'LAS'
-PLAYER_NAME = 'Naxeron'
-csv_file = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{PLAYER_NAME}", 'datos_filtrados.csv')
+GAME_NAME = 'komanche uchiha'
+TAG_LINE = 'elite'
+player_name = 'eltuko'
+csv_file = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{player_name}", 'datos_filtrados.csv')
 icon_path = 'assets/campeones'
-graphs_path = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{PLAYER_NAME}")
+graphs_path = os.path.join('assets', f"{GAME_NAME}_{TAG_LINE}_{player_name}")
 
 if not os.path.exists(csv_file):
     print(f"No se encontró el archivo {csv_file}")
@@ -28,13 +28,13 @@ if 'Invocador' not in data.columns:
     print(f"Columnas disponibles: {data.columns}")
     exit()
 
-player_data = data[data['Invocador'] == PLAYER_NAME].copy()
+player_data = data[data['Invocador'] == player_name].copy()
 if player_data.empty:
-    print(f"No se encontraron partidas para {PLAYER_NAME}.")
+    print(f"No se encontraron partidas para {player_name}.")
     exit()
 
 # Filtrar los datos del rival directo
-enemy_data = data[data['Invocador'] != PLAYER_NAME]
+enemy_data = data[data['Invocador'] != player_name]
 
 # Asegurarse de que los índices coincidan
 enemy_data = enemy_data.set_index(player_data.index)
@@ -47,7 +47,7 @@ output_dir = os.path.join('assets', 'reportes')
 os.makedirs(output_dir, exist_ok=True)
 
 # Archivo PDF de salida
-pdf_filename = os.path.join(output_dir, f'dashboard_{PLAYER_NAME}.pdf')
+pdf_filename = os.path.join(output_dir, f'dashboard_{player_name}.pdf')
 
 # Función para formatear los datos del jugador y del enemigo
 def format_data(player_value, enemy_value):
@@ -93,7 +93,7 @@ with PdfPages(pdf_filename) as pdf:
                 cell.set_width(0.1)
         
         
-        ax.set_title(f"Estadísticas Generales de {PLAYER_NAME} (Página {i + 1})", fontsize=14, fontweight="bold", pad=30)
+        ax.set_title(f"Estadísticas Generales de {player_name} (Página {i + 1})", fontsize=14, fontweight="bold", pad=30)
         pdf.savefig(fig)
         plt.close(fig)
 
@@ -156,10 +156,10 @@ if os.path.exists(players_file):
 else:
     players = []
 
-if PLAYER_NAME not in players:
+if player_name not in players:
     with open(players_file, 'a') as f:
-        f.write(f"{PLAYER_NAME}\n")
+        f.write(f"{player_name}\n")
 
 
 print(f"Dashboard guardado en {pdf_filename}")
-print(f"{PLAYER_NAME} guardado en assets/reportes/players.txt")
+print(f"{player_name} guardado en assets/reportes/players.txt")

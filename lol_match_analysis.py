@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import os
 
 # Leer los datos del archivo CSV
-GAME_NAME = 'Naxeron'
-TAG_LINE = 'LAS'
-player_name = 'Naxeron'  # Reemplaza con el nombre del jugador específico
+GAME_NAME = 'komanche uchiha'
+TAG_LINE = 'elite'
+player_name = 'eltuko'  # Reemplaza con el nombre del jugador específico
 csv_file = f'match_history_{GAME_NAME}_{TAG_LINE}.csv'
 data = pd.read_csv(csv_file)
 
